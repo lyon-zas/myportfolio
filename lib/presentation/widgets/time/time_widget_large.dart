@@ -1,0 +1,84 @@
+import 'package:flutter/material.dart';
+import 'package:getlinked_landing_page/core/core.dart';
+import 'package:getlinked_landing_page/presentation/widgets/purple_flares.dart';
+import 'package:getlinked_landing_page/presentation/widgets/svg_asset_widget.dart';
+import 'package:getlinked_landing_page/presentation/widgets/time/get_linked_text.dart';
+import 'package:getlinked_landing_page/presentation/widgets/time/man_with_glasses.dart';
+
+/// Widget rendered for screensizes greater than tablets
+class TimeWidgetLargeScreen extends StatelessWidget {
+  const TimeWidgetLargeScreen({
+    Key? key,
+    required this.screenWidth,
+    required this.onRegisterPressed,
+  }) : super(key: key);
+
+  final double screenWidth;
+
+  final VoidCallback onRegisterPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ResponsiveCenter(
+        child: Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        // Positioned(
+        //   top: screenHeight(context, percent: 2),
+        //   right: screenWidth * 0.4,
+        //   child: const BigPurpleFlare(),
+        // ),
+        Positioned(
+            top: screenHeight(context,
+                percent: (screenWidth > Breakpoint.tablet &&
+                        screenWidth < Breakpoint.desktop)
+                    ? 50
+                    : 10),
+            left: screenWidth * 0.4,
+            child: const BigPurpleFlare()),
+        Column(
+          children: [
+            const Gap(100),
+            if (screenWidth > Breakpoint.tablet &&
+                screenWidth < Breakpoint.desktop)
+              const Gap(300),
+            const ManWithGlassWorldWidget(),
+          ],
+        ),
+        Positioned(
+            top: screenHeight(context, percent: 10),
+            left: screenWidth * 0.03,
+            child: GetlinkedTextSection(
+              onRegisterPressed: onRegisterPressed,
+            )),
+        Positioned(
+            top: screenHeight(context, percent: 70),
+            left: screenWidth * 0.4,
+            child: Image.asset(PngAsset.star3)),
+        Positioned(
+            top: screenHeight(context, percent: 10),
+            left: screenWidth * 0.1,
+            child: Image.asset(PngAsset.star1)),
+        Positioned(
+            top: screenHeight(context, percent: 20),
+            left: screenWidth * 0.58,
+            child: Image.asset(PngAsset.star2)),
+        Positioned(
+            top: screenHeight(context, percent: 12),
+            left: screenWidth * 0.15,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 300),
+              child: Image.asset(PngAsset.creativeIdea),
+            )),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: 0.2,
+            width: screenWidth,
+            color: AppColors.lightGreyColor,
+          ),
+        )
+      ],
+    ));
+  }
+}
